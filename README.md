@@ -1,52 +1,68 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Tripplun-front
 
-## Getting Started
+## About this Repo
 
-First, run the development server:
+## Prerequisites
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+Git
+Node.js v 16.+
+pnpm v 7.+
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Getting started
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+- Clone this repository to your local machine.
+- Run `pnpm install` in the project directory to install all required dependencies.
+- Create a .env file at the root directory of the project and add the necessary environment variables.
+    - .env.development.local : for development
+    - .env.production.local : for production
+    - .env.local : always overrides the defaults set.
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+### development
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+-  Run `pnpm dev` to start the application.
+-  First, run the development server, open http://localhost:3000 with your browser to see the result.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+### production
 
-## Learn More
+- Run `pnpm build` to build production application.
+- Run `pnpm start` to start the application.
+- Open http://localhost:3000 with your browser to see the result.
 
-To learn more about Next.js, take a look at the following resources:
+### docker
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+ - build
+`docker build -t nextjs-docker .`
+- run
+`docker run -d -p 80:3000 --name nextjs-docker nextjs-docker`
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## Core Skills
 
-## Deploy on Vercel
+- [Next.js](https://nextjs.org/) : React framework for building server-side rendered (SSR) and statically generated (SSG) web applications.
+- [Chakra UI](https://chakra-ui.com/) : React UI library.
+- [MongoDB](https://www.mongodb.com/) : NoSQL document-oriented database.
+- `WebSocket` : Real-time communication between the client and the server.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Tools
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- [TypeScript](https://www.typescriptlang.org/) : Strongly typed programming language builds on JavaScript.
+- [Husky](https://typicode.github.io/husky/#/) : Unify git commit tools.
+- [commitlint](https://commitlint.js.org/#/) : Lint git commit message.
+- [Axios](https://github.com/axios/axios) : Promise based HTTP client for the browser and node.js.
+- [React Hooks Form](https://github.com/react-hook-form/react-hook-form) : React Hooks for form state management and validation.
+- [SWR](https://swr.vercel.app/) : SWR is a strategy to first return the data from cache (stale), then send the fetch request (revalidate), and finally come with the up-to-date data.
 
-## Docker
+## Documents
 
-build
+- [document preview](https://tripplus-003.github.io/frontend-docs/)
 
-```
-docker build -t nextjs-docker .
-```
+## Coding Style
 
-run
+### Commit Message Guidelines
 
-```
-docker run -d -p 80:3000 --name nextjs-docker nextjs-docker
-```
+## Contributors
+
+- [yuhantaiwan]()
+- [happy9990929]()
+- [Wendy03]()
+- [chilinglee]()
+- [gn00678465]()
