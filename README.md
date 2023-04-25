@@ -1,8 +1,8 @@
-# Tripplus-client
+# TripPlus-client
 
 ## About this Repo
 
-Tripplus Side Project / Tripplus-client : This is a project tracking application by using Next.js and Typescript.
+TripPlus Side Project / TripPlus-client : This is a project tracking application by using Next.js and Typescript.
 
 ## Prerequisites
 
@@ -40,11 +40,11 @@ pnpm v 7.+
 
 - build
   ```bash
-  docker build -t tripplus-client .
+  docker build -t TripPlus-client .
   ```
 - run
   ```
-  docker run -d -p 80:3000 --name tripplus-client tripplus-client
+  docker run -d -p 80:3000 --name TripPlus-client TripPlus-client
   ```
 
 ## Core Skills
