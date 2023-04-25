@@ -2,20 +2,28 @@
 
 ## About this Repo
 
+Tripplus Side Project / Front-End : This is a project tracking application by using Next.js and Typescript.
+
 ## Prerequisites
 
 Git
+
 Node.js v 16.+
+
 pnpm v 7.+
+
+## Team Work Flow
+
+[Team Work Flow](TEAM_WORK_FLOW.md)
 
 ## Getting started
 
 - Clone this repository to your local machine.
 - Run `pnpm install` in the project directory to install all required dependencies.
 - Create a .env file at the root directory of the project and add the necessary environment variables.
-    - .env.development.local : for development
-    - .env.production.local : for production
-    - .env.local : always overrides the defaults set.
+    - `.env.development.local` : for development
+    - `.env.production.local` : for production
+    - `.env.local` : always overrides the defaults set.
 
 ### development
 
@@ -30,10 +38,14 @@ pnpm v 7.+
 
 ### docker
 
- - build
-`docker build -t nextjs-docker .`
+- build
+    ```bash
+    docker build -t nextjs-docker .
+    ```
 - run
-`docker run -d -p 80:3000 --name nextjs-docker nextjs-docker`
+    ```
+    docker run -d -p 80:3000 --name nextjs-docker nextjs-docker
+    ```
 
 ## Core Skills
 
@@ -54,10 +66,6 @@ pnpm v 7.+
 ## Documents
 
 - [document preview](https://tripplus-003.github.io/frontend-docs/)
-
-## Coding Style
-
-### Commit Message Guidelines
 
 ## Contributors
 
