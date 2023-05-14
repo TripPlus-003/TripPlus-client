@@ -10,6 +10,7 @@ export const authOptions: NextAuthOptions = {
       id: 'email',
       name: 'login',
       credentials: {},
+      // @ts-ignore 會報錯誤，先行忽略
       async authorize(credentials) {
         const { email, password, isRemember } =
           credentials as LoginInterface.FormInputs;
