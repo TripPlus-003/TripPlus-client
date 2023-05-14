@@ -1,6 +1,5 @@
 import { create } from 'zustand';
 import { devtools, persist } from 'zustand/middleware';
-import Cookies from 'js-cookie';
 
 type State = {
   userInfo: ApiAuth.UserInfo | null;
@@ -23,7 +22,6 @@ export const useAuthStore = create<State & Actions>()(
         _hasHydrated: false,
         setUserInfo: (params) => {
           set((state) => {
-            Cookies.set('token', params.token, { secure: true });
             return { ...state, userInfo: params };
           });
         },
@@ -45,13 +43,8 @@ export const useAuthStore = create<State & Actions>()(
             Object.entries(state).filter(([key]) => ['userInfo'].includes(key))
           ),
         onRehydrateStorage: () => {
-          Cookies.remove('token');
           return (state) => {
             if (state) {
-              const token = state.userInfo?.token;
-              if (token) {
-                Cookies.set('token', token, { secure: true });
-              }
               state.setHasHydrated(true);
             }
           };

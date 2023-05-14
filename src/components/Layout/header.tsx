@@ -26,14 +26,14 @@ import { GrClose } from 'react-icons/gr';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { useAuthStore } from '@/store';
-import { useCookie } from '@/hooks';
+import { useSession, signOut } from 'next-auth/react';
 
 const Header = () => {
   const router = useRouter();
-  const [value, updateCookie, deleteCookie] = useCookie('token');
   const hasHydrated = useAuthStore((state) => state._hasHydrated);
   const loginStatus = useAuthStore((state) => state.getters.isLogin);
   const [isLogin, setIsLogin] = useState(false);
+  const { data: session, status } = useSession();
 
   useEffect(() => {
     if (hasHydrated) {
@@ -48,13 +48,11 @@ const Header = () => {
   const [placement, setPlacement] = useState<DrawerPlacement>('top');
 
   const logout = () => {
-    if (!isLogin) {
-      router.push('/login');
-      return;
+    if (status === 'authenticated') {
+      signOut({
+        callbackUrl: '/'
+      });
     }
-    useAuthStore.persist.clearStorage();
-    deleteCookie();
-    router.push('/');
   };
 
   const menu = [
@@ -109,7 +107,7 @@ const Header = () => {
               搜尋
             </Center>
             <Button colorScheme="primary" width={81} onClick={logout}>
-              {hasHydrated && isLogin ? '登出' : '登入'}
+              {session && status === 'authenticated' ? '登出' : '登入'}
             </Button>
           </Box>
 

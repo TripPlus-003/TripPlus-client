@@ -3,12 +3,10 @@ import { GetStaticProps } from 'next';
 import Link from 'next/link';
 import Head from 'next/head';
 import type { ReactElement } from 'react';
-import { apiPostLogin } from '@/service/api/index';
 import ModalBox, { type ModalState } from '@/components/Modal';
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
-import { safeAwait } from '@/utils';
 import {
   Box,
   Container,
@@ -26,11 +24,9 @@ import {
 } from '@chakra-ui/react';
 import { FcGoogle } from 'react-icons/fc';
 import { useAuthStore } from '@/store';
+import { useSession, signIn } from 'next-auth/react';
 
 const Login: App.NextPageWithLayout = () => {
-  const router = useRouter();
-  const setUserInfo = useAuthStore((state) => state.setUserInfo);
-
   const [modal, setModal] = useState<ModalState>({
     isOpen: false,
     content: '',
@@ -55,20 +51,12 @@ const Login: App.NextPageWithLayout = () => {
   });
 
   const onSubmit = async (data: LoginInterface.FormInputs) => {
-    const [err, res] = await safeAwait(apiPostLogin(data));
-    if (err) {
-      setModal(() => ({
-        isOpen: true,
-        content: err.message,
-        footer: <Button onClick={() => setOpenModal(false)}>OK</Button>
-      }));
-    }
-
-    if (res) {
-      if (res.status !== 'Success') return;
-      setUserInfo(res.data);
-      router.push('/');
-    }
+    const res = await signIn('email', {
+      email: data.email,
+      password: data.password,
+      isRemember: data.isRemember,
+      callbackUrl: '/'
+    });
   };
 
   return (

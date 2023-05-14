@@ -3,6 +3,9 @@ import type { AppProps } from 'next/app';
 import { Noto_Sans_TC, Ubuntu } from 'next/font/google';
 import localFont from 'next/font/local';
 import { Chakra } from '@/components';
+import { SessionProvider } from 'next-auth/react';
+import { SWRConfig } from 'swr';
+import { useAuthStore } from '@/store';
 
 const noto_sans_tc = Noto_Sans_TC({
   weight: ['100', '300', '400', '500', '700', '900'],
@@ -42,13 +45,21 @@ type AppPropsWithLayout = AppProps & {
   Component: App.NextPageWithLayout;
 };
 
-export default function App({ Component, pageProps }: AppPropsWithLayout) {
+export default function App({
+  Component,
+  pageProps: { session, ...pageProps }
+}: AppPropsWithLayout) {
   const getLayout = Component.getLayout ?? ((page) => page);
+
   return (
-    <main
-      className={`${ubuntu.variable} ${noto_sans_tc.variable} ${alkatra.variable} flex min-h-screen flex-col font-sans text-gray-900`}
-    >
-      <Chakra>{getLayout(<Component {...pageProps} />)}</Chakra>
-    </main>
+    <SessionProvider session={session}>
+      <SWRConfig>
+        <main
+          className={`${ubuntu.variable} ${noto_sans_tc.variable} ${alkatra.variable} flex min-h-screen flex-col font-sans text-gray-900`}
+        >
+          <Chakra>{getLayout(<Component {...pageProps} />)}</Chakra>
+        </main>
+      </SWRConfig>
+    </SessionProvider>
   );
 }

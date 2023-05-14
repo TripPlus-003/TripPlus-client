@@ -1,5 +1,5 @@
 import Head from 'next/head';
-import Image from 'next/image';
+import Image, { type StaticImageData } from 'next/image';
 import { GetStaticProps } from 'next';
 import { Layout } from '@/components';
 import UserHeader from '@/components/User/user-header';
@@ -31,6 +31,7 @@ import NoImage from '@/assets/images/user/no-image.png';
 import dayjs from 'dayjs';
 import toObject from 'dayjs/plugin/toObject';
 import utc from 'dayjs/plugin/utc';
+import { useSession } from 'next-auth/react';
 
 dayjs.extend(toObject);
 dayjs.extend(utc);
@@ -48,7 +49,9 @@ const gender = [
 
 const Account: App.NextPageWithLayout = () => {
   const { mutate } = useSWRConfig();
+  const { data: session } = useSession();
 
+  const [image, setImage] = useState<string | StaticImageData>(NoImage);
   const [file, setFile] = useState<undefined | File>();
   const { dataURL } = useFileReader(file);
   const [loading, setLoading] = useState(false);
@@ -81,15 +84,16 @@ const Account: App.NextPageWithLayout = () => {
     handleSubmit,
     register,
     formState: { errors },
-    reset,
-    getValues,
-    setValue
+    reset
   } = useForm<UserAccountInterface.FormInputs>();
 
   // queries
   const { data: account } = useSWR(
     ['get', '/api/user/account'],
-    apiGetUserAccount,
+    () =>
+      apiGetUserAccount({
+        headers: { Authorization: `Bearer ${session?.user.token}` }
+      }),
     {
       onSuccess(data, key, config) {
         if (data && data.status === 'Success') {
@@ -110,6 +114,7 @@ const Account: App.NextPageWithLayout = () => {
             month: isNaN(months) ? undefined : months + 1,
             day: isNaN(date) ? undefined : date
           });
+          data.data?.photo && setImage(data.data?.photo);
         }
       }
     }
@@ -198,7 +203,7 @@ const Account: App.NextPageWithLayout = () => {
                   className="relative mx-auto h-60 w-60"
                 >
                   <Image
-                    src={dataURL || getValues('photo') || NoImage}
+                    src={dataURL || image}
                     alt="使用者圖片"
                     width={500}
                     height={500}
