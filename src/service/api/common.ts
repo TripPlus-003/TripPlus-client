@@ -1,4 +1,4 @@
-import { request } from '../request';
+import { request } from '@/config/axios';
 
 export function apiPostUpload(formData: FormData) {
   return request.post<ApiAuth.UploadFile>('/upload', formData, {

@@ -5,7 +5,6 @@ import type {
   AxiosResponse,
   AxiosRequestConfig
 } from 'axios';
-import { getToken } from './helpers';
 import type { RequestInterceptor } from './types';
 import { handleAxiosError } from '@/utils';
 
@@ -28,14 +27,8 @@ export default class CustomAxiosInstance {
   setInterceptor() {
     // global request interceptor
     this.instance.interceptors.request.use(
-      (config) => {
-        let handleConfig = { ...config };
-
-        // 處理 token
-        const token = getToken();
-        handleConfig.headers.Authorization = `Bearer ${token}`;
-
-        return handleConfig;
+      async (config) => {
+        return config;
       },
       (axiosError: AxiosError<Service.FailedResult>) => {
         const error = handleAxiosError(axiosError);

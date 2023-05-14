@@ -1,9 +1,4 @@
-import { request } from '../request';
-
-interface LoginBody {
-  email: string;
-  password: string;
-}
+import { request } from '@/config/axios';
 
 interface SignupBody {
   email: string;
@@ -12,7 +7,7 @@ interface SignupBody {
   confirmPassword: string;
 }
 
-export function apiPostLogin(data: LoginBody) {
+export function apiPostLogin(data: LoginInterface.FormInputs) {
   return request.post<ApiAuth.UserInfo>('/auth/login', data);
 }
 
