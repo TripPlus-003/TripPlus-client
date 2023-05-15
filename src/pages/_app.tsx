@@ -53,7 +53,14 @@ export default function App({
 
   return (
     <SessionProvider session={session}>
-      <SWRConfig>
+      <SWRConfig
+        value={{
+          onErrorRetry: (error, key, config, revalidate, { retryCount }) => {
+            if (error.status === 404) return;
+            if (retryCount >= 5) return;
+          }
+        }}
+      >
         <main
           className={`${ubuntu.variable} ${noto_sans_tc.variable} ${alkatra.variable} flex min-h-screen flex-col font-sans text-gray-900`}
         >
